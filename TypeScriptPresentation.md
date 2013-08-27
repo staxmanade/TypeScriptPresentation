@@ -1,15 +1,17 @@
+Setup:
+
+1. Load something so we can easily get to `lib.d.ts`
+2. Turn off Whitespace in Visual Studio
+3. Turn off compile on save for TypeScript
+4. Turn off 'auto load changes if saved'
+5. Bump up fonts
+6. Open http://www.typescriptlang.org/Playground/
+
+
 TODO:
 
-- turn off whitespace in Visual Studio
-
+- manually download font? https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic
 - Search for other TODO's and fix
-- Describe some special syntax of the language
-- Answer some questions
-    - Who created it?
-    - Why would I use it?
-    - How will it help me?
-- Talk about the compiler
-    - some of the command line options
 - Walk through converting an existing project to TypeScript
 
 ===
@@ -47,7 +49,7 @@ Note:
 - ES6
 - Static annotations
 
-==
+===
 
 ### TypeScript
 
@@ -56,49 +58,30 @@ Note:
 Note:
 - Difficult to structure JavaScript at scale.
 - Prevalence of JavaScript
+- Catches a class of bugs earlier
 
 ==
 
-### TypeScript
-
-# Who?
-
-Note:
-- Built by Microsoft (built out in the open)
-- Open Source (Apache License 2.0)
-- Led by Anders Hejlsberg (Lead Architect of C#)
-
-==
-
-### TypeScript
-
-# Where?
-
-Note:
-- IDE's
-- Build tools (command line, C.I.)
-
-===
-
-# catch subtle bugs
+# subtle bug(s)
 
 > can you see the error(s) here?
 
     function myLog(value: string) {
-        console.log(value);
+        alert(value);
     }
     
     mylog(["Hello World"]);
 
 ==
+> can you see the error(s) here?
 
-# run tsc
+    function myLog(value: string) {
+        alert(value);
+    }
+    
+    mylog(["Hello World"]);
 
-    tsc myLog.ts
-
-==
-
-# Error 1
+compile and we get
 
     Compile Error. 
 
@@ -107,7 +90,30 @@ Note:
 
 ==
 
+## next bug
+
+> can you see the error here?
+
+    function myLog(value: string) {
+        console.log(value);
+    }
+    
+    myLog(["Hello World"]);
+
+==
+
 # Error 2
+
+
+> can you see the error here?
+
+    function myLog(value: string) {
+        console.log(value);
+    }
+    
+    myLog(["Hello World"]);
+
+compile and we get
 
     Compile Error. 
 
@@ -119,7 +125,118 @@ Note:
         error TS2087: Could not select overload 
                       for 'call' expression.
 
+==
+
+Now that all our errors are removed
+
+    function myLog(value: string) {
+        console.log(value);
+    }
+    
+    myLog("Hello World");
+
+==
+
+Now that all our errors are removed
+
+    function myLog(value: string) {
+        console.log(value);
+    }
+    
+    myLog("Hello World");
+
+compile and we get
+
+    function myLog(value) {
+        console.log(value);
+    }
+
+    myLog("Hello World");
+
 ===
+
+### TypeScript
+
+# Who?
+
+Note:
+- Built by Microsoft (built out in the open)
+    - Haven't seen them take a pull-request
+    - But are pretty good to respond to Issues reported.
+- Open Source (Apache License 2.0)
+- Led by Anders Hejlsberg (Lead Architect of C#)
+    - As of 8/26 - he's only made 2 commits to the source code and they for spec documentation
+
+==
+
+# Who else?
+
+- [DefinitelyTyped](http://github.com/DefinitelyTyped) (OSS)
+    - `NuGet` and `tsd`
+
+Note:
+- TypeScript in place of w3c language
+- DefinitelyTyped
+- Forks of TypeScript on GitHub
+
+===
+
+### TypeScript
+
+# Where?
+
+Anywhere you write JavaScript (almost)
+
+===
+
+### TypeScript
+
+# How?
+
+Note:
+- IDE's
+- Build tools (command line, C.I.)
+
+==
+
+## Install
+
+- Visual Studio Extension
+
+or
+
+`node install -g typescript`
+
+### Compiler
+
+    :> tsc [options] [file ..]
+
+
+Some Examples
+
+    :> tsc hello.ts
+    :> tsc --out foo.js foo.ts
+    :> tsc @args.txt
+
+Note:
+
+- command line `tsc`
+- compiler is a `.js` file
+- can be leveraged by 3rd party tooling
+
+==
+
+# some options
+
+      -d, --declaration             Generates corresponding .d.ts file
+      -m KIND, --module KIND        Specify module code generation: "commonjs" or "amd"
+      --noImplicitAny               Warn on expressions and declarations with an implied 'any' type.
+      --sourcemap                   Generates corresponding .map file
+      -t VERSION, --target VERSION  Specify ECMAScript target version: "ES3" (default), or "ES5"
+      @<file>                       Insert command line options and files from a file.
+
+... there are more than listed above ...
+==
 
 # Editors
 
@@ -186,6 +303,7 @@ All the greatness of JetBrains for TypeScript
 Vim (github: [typescript-vim](https://github.com/leafgarland/typescript-vim))
 ![](images/EditorsVim.png)
 
+Note:
 TODO: https://github.com/clausreinke/typescript-tools
 
 ==
@@ -291,85 +409,113 @@ or
 The above can work with either `CommonJS` like `RequireJS` or `AMD` used by `nodejs`
 
 ==
+## Type annotations
 
-TODO:
 
-- cover optional parameters?
-- default parameter
+==
 
-```
-    defaultParameter(name: string = 'Default') {
+## Arrow Functions
+
+==
+
+## Optional Parameters?
+
+    function optional(name: string, age?: number) {
+        return "Name: " + name + " Age: " + age;
+    }
+
+    optional("hi");
+    optional("hi", 1);
+
+compiles to
+
+    function optional(name, age) {
+        return "Name: " + name + " Age: " + age;
+    }
+
+    optional("hi");
+    optional("hi", 1);
+
+==
+
+## Default Parameters
+
+    function defaultParameter(name: string = 'myDefaultValue') {
         return name;
     }
-```
 
-- rest parameter
+compiles to
 
-```
-    restParameter(...name: string[]) {
-        return name.toString();
+    function defaultParameter(name) {
+        if (typeof name === "undefined") { name = 'myDefaultValue'; }
+        return name;
     }
-```
 
-- overloads
+==
 
-    overloadedMethod(input: string);
-    overloadedMethod(input: number);
-    overloadedMethod(input: any) {
+## Overloads
+
+    function overloadedMethod(input: string);
+    function overloadedMethod(input: number);
+    function overloadedMethod(input: any) {
         return input.toString();
     }
 
-- Enumerations
+==
 
-    enum States {
-        Solid,
-        Liquid,
-        Gas
-    }
-    enum Sizes {
-        Small = 3,
-        Medium = 5,
-        Large = 8
+## Enumerations
+
+    enum MyEnum {
+        Value1,
+        Value2,
+        Value3
     }
 
-- generics with type constraints
+compiles to
 
-- structural typing
+    var MyEnum;
+    (function (MyEnum) {
+        MyEnum[MyEnum["Value1"] = 0] = "Value1";
+        MyEnum[MyEnum["Value2"] = 1] = "Value2";
+        MyEnum[MyEnum["Value3"] = 2] = "Value3";
+    })(MyEnum || (MyEnum = {}));
+
+==
+
+## Enum sample 2
+
+    enum MyOtherEnum {
+        Value1 = 3,
+        Value2 = 5,
+        Value3 = 8
+    }
+
+compiles to
+
+    var MyOtherEnum;
+    (function (MyOtherEnum) {
+        MyOtherEnum[MyOtherEnum["Value1"] = 3] = "Value1";
+        MyOtherEnum[MyOtherEnum["Value2"] = 5] = "Value2";
+        MyOtherEnum[MyOtherEnum["Value3"] = 8] = "Value3";
+    })(MyOtherEnum || (MyOtherEnum = {}));
+
+==
+
+## Structural Typing
 
     class ClassA {
         SomeMethod(name: string) {
             return name;
         }
     }
-    class ClassB {
-        SomeMethod(name: string) {
-            return 'Arbitrary value';
-        }
-    }
-    var ExampleC = function () {
+
+    var SpecialC = function () {
         this.SomeMethod = function (name: string) {
             return name;
         }
     }
 
-    var proof: ClassA = new ExampleC();
-
-
-- Access modifiers
-
-- exceptions & custom errors
-
-- lib.d.ts
-- Type annotations
-- arrow functions
-
-===
-
-# Let's go play with the language
-
-- Visual Studio
-- Set TypeScript to compile on save
-- Set document refresh options
+    var proof: ClassA = new SpecialC();
 
 ==
 
@@ -385,18 +531,44 @@ happy tsc
 
     declare var document;
     document.title = "Hello";
+==
+
+Note:
+TODO: 
+
+## Access modifiers
+
+## Generics with type constraints
+
+## Exceptions & custom errors
+
+## Rest Parameter
+
+```
+    restParameter(...name: string[]) {
+        return name.toString();
+    }
+```
+
+==
+
+# lib.d.ts
+
+Note:
+- show it in V.S.
 
 ===
 
+# Let's go play with the language
 
-CATS
-.\node-webkit\nw.exe .\cats\ C:\Code\personal\Approvals.NodeJS
+Note:
+- Visual Studio
+- Set TypeScript to compile on save
+- Set document refresh options
 
+==
 
-
-
-
-Convert an existing project to TypeScript?
+# Convert an existing project to TypeScript?
 
 # Rename files from javascript to typescript
 ls *.js -Recurse | %{ mv $_ ($_.FullName.trimEnd("js") + "ts") }
@@ -416,10 +588,6 @@ ls .\lib\* -exclude references.ts -Include *.ts -Recurse | %{ $subCount = ($_.Di
 - Found a possible bug in the lib/Providers/Mocha/Approvals.Mocha.ts (WTF?)
 http://www.reactiongifs.com/wp-content/uploads/2011/09/mind_blown.gif
 
-# External JavaScript libraries
-
-- TypeScript definitions
-- [DefinitelyTyped](http://github.com/DefinitelyTyped) (OSS)
 
 
 
