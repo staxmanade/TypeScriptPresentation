@@ -24,41 +24,13 @@ TODO:
 
 ===
 
-# TypeScript What?
+### TypeScript
 
-
-Note:
-- Origination: large scale JS applications
-- Difficult to structure JavaScript at scale.
+# What?
 
 ==
 
-# TypeScript Who?
-
-Note:
-- Built by Microsoft (but out in the open)
-- Open Source (Apache License 2.0)
-- Led by Anders Hejlsberg (Lead Architect of C#)
-
-==
-
-# TypeScript Why?
-
-Note:
-- Need for large scale codebases
-- Prevalence of JavaScript
-
-==
-
-# TypeScript Where?
-
-Note:
-- IDE's
-- Build tools (command line, C.I.)
-
-===
-
-# The Language
+## The Language
 
 The below JavaScript
 
@@ -69,6 +41,42 @@ The below JavaScript
     log("Hello World");
 
 is also TypeScript
+
+Note:
+- It's just JavaScript - sort of -(Superset)
+- ES6
+- Static annotations
+
+==
+
+### TypeScript
+
+# Why?
+
+Note:
+- Difficult to structure JavaScript at scale.
+- Prevalence of JavaScript
+
+==
+
+### TypeScript
+
+# Who?
+
+Note:
+- Built by Microsoft (built out in the open)
+- Open Source (Apache License 2.0)
+- Led by Anders Hejlsberg (Lead Architect of C#)
+
+==
+
+### TypeScript
+
+# Where?
+
+Note:
+- IDE's
+- Build tools (command line, C.I.)
 
 ===
 
@@ -355,18 +363,13 @@ TODO:
 - Type annotations
 - arrow functions
 
+===
 
-# Unorganized bits
+# Let's go play with the language
 
-Why TypeScript?
-- TypeScript originates from the need to develop large-scale JavaScript applications.
-
-http://en.wikipedia.org/wiki/TypeScript
-- ECMAScript 6 support
-- Open Source
-- Built by Microsoft (but out in the open)
-- Led by Anders Hejlsberg (Lead Architect of C#)
-
+- Visual Studio
+- Set TypeScript to compile on save
+- Set document refresh options
 
 ==
 
