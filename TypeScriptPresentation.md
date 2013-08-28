@@ -7,12 +7,6 @@ Setup:
 5. Bump up fonts
 6. Open http://www.typescriptlang.org/Playground/
 
-
-TODO:
-
-- Search for other TODO's and fix
-- Walk through converting an existing project to TypeScript
-
 ===
 
 # TypeScript 
@@ -555,8 +549,6 @@ compiles to
 
 Note:
 TODO: 
-
-Ambient Declarations and Declaration Source Files
 
 
 ## Access modifiers
