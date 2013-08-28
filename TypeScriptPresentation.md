@@ -10,7 +10,6 @@ Setup:
 
 TODO:
 
-- manually download font? https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic
 - Search for other TODO's and fix
 - Walk through converting an existing project to TypeScript
 
@@ -48,6 +47,9 @@ Note:
 - It's just JavaScript - sort of -(Superset)
 - ES6
 - Static annotations
+- Modules
+- Classes
+- Compiler for static verification
 
 ===
 
@@ -164,6 +166,7 @@ Note:
     - Haven't seen them take a pull-request
     - But are pretty good to respond to Issues reported.
 - Open Source (Apache License 2.0)
+- Project hosted on codeplex
 - Led by Anders Hejlsberg (Lead Architect of C#)
     - As of 8/26 - he's only made 2 commits to the source code and they for spec documentation
 
@@ -201,11 +204,13 @@ Note:
 
 ## Install
 
-- Visual Studio Extension
+`Visual Studio Extension`
 
 or
 
-`node install -g typescript`
+`npm install -g typescript`
+
+==
 
 ### Compiler
 
@@ -221,8 +226,8 @@ Some Examples
 Note:
 
 - command line `tsc`
-- compiler is a `.js` file
-- can be leveraged by 3rd party tooling
+- compiler is written in `.ts` and when running is just `.js`
+- can be leveraged by 3rd party tooling (AST, Tokenizer, etc)
 
 ==
 
@@ -236,12 +241,22 @@ Note:
       @<file>                       Insert command line options and files from a file.
 
 ... there are more than listed above ...
+
+Note:
+
+- declaration: will generate a typescript definition file - good for public libraries so others can use the definitions.
+- module type (commonjs or AMD)
+- noImplicitAny: will warn you if the compiler infers an 'any' type in your code.
+- sourcemap:
+- target: which version of EcmaScript to compile to ES3(default) or ES5 supported
+- (at-file): allows you to put your command line options into a file.
+
 ==
 
 # Editors
 
 - many choices
-- early but each is getting better
+- early but story is quickly improving
 
 ==
 
@@ -412,9 +427,29 @@ The above can work with either `CommonJS` like `RequireJS` or `AMD` used by `nod
 ## Type annotations
 
 
+    var a: number = 1;
+    var b: string = "hello";
+    var c: SomeClass = new SomeClass();
+
+    class SomeClass { }
+    var func = function(input: SomeClass): number {
+        return 1;
+    }
+
 ==
 
 ## Arrow Functions
+
+    var func = () => {
+        return "Hi"
+    }
+
+compiles to
+
+    var func = function () {
+        return "Hi";
+    };
+
 
 ==
 
@@ -517,26 +552,18 @@ compiles to
 
     var proof: ClassA = new SpecialC();
 
-==
-
-## Ambient Declarations
-
-angry tsc
-
-    document.title = "Hello";
-
-error TS2095: Could not find symbol 'document'.
-
-happy tsc
-
-    declare var document;
-    document.title = "Hello";
-==
 
 Note:
 TODO: 
 
+Ambient Declarations and Declaration Source Files
+
+
 ## Access modifiers
+
+- public
+- private
+- static
 
 ## Generics with type constraints
 
@@ -550,62 +577,56 @@ TODO:
     }
 ```
 
+===
+
+# Interfacing with external JS
+
 ==
 
-# lib.d.ts
+## Ambient Declarations
+
+angry tsc
+
+    myGlobal.foo = "Hello";
+
+error TS2095: Could not find symbol 'document'.
+
+---
+
+happy tsc
+
+    declare var myGlobal;
+    myGlobal.foo = "Hello";
+==
+
+## Definiton files
+
+lib.d.ts
+
+DefinitelyTyped
 
 Note:
-- show it in V.S.
+- show lib.d.ts it in V.S.
 
 ===
 
-# Let's go play with the language
+# Let's play with TypeScript
 
 Note:
 - Visual Studio
 - Set TypeScript to compile on save
 - Set document refresh options
 
-==
 
-# Convert an existing project to TypeScript?
+Really good article:
+http://www.codeproject.com/Articles/528295/ModularizationplusinplusTypeScript
 
-# Rename files from javascript to typescript
-ls *.js -Recurse | %{ mv $_ ($_.FullName.trimEnd("js") + "ts") }
+===
 
-- Add typescript to the build
-- run 'grunt'
-
- - npm install -g tsd
-
-.\d.ts\DefinitelyTyped\node\node.d.ts
-
-- Put the references.ts path into the root of each file.
-$projectRoot = (pwd).path;
-ls .\lib\* -exclude references.ts -Include *.ts -Recurse | %{ $subCount = ($_.Directory.FullName).replace($projectRoot + '\', '').split('\').length-1; $file = cat $_; sc $_ -value ("///<reference path='" + ("../" * $subCount) + "references.ts' />`n"), $file }
-
-- fixup the static declaration method on FileApprover.ts
-- Found a possible bug in the lib/Providers/Mocha/Approvals.Mocha.ts (WTF?)
-http://www.reactiongifs.com/wp-content/uploads/2011/09/mind_blown.gif
-
-
-
-
-ZSH on mac.
-for i in ./**/*.js ; do mv $i ${i:r}.ts ; done
-
-tsc Approvals.js
-
-npm install tsd -g
-
-
-TODO: figure out powershell version
-ls * -recur -include *.js | %{ mv $_ (
-
-
-
-The language syntax
-
-Some typescript features
-
-tsc (compiler) (review some command line options)
+## Presentation:
+[http://github.com/staxmanade/TypeScriptPresentation](http://github.com/staxmanade/TypeScriptPresentation)
+<br>Or this: [http://goo.gl/68qTPm](http://goo.gl/68qTPm)
+<br>
+<br>
+### Thanks
+Jason Jarrett

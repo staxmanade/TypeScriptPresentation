@@ -1,4 +1,4 @@
-
+console.log("hi");
 
 /*
 
@@ -145,6 +145,9 @@ cars.add({
 
 */
 
+
+
+/*
 module Mo {
     export function myFun(x: number) {
         return x;
@@ -152,3 +155,46 @@ module Mo {
 }
 
 var m: typeof Mo = Mo;
+
+*/
+
+
+/*
+
+
+interface IAmSomeInterface {
+    getNumber(): number;
+}
+
+interface IAmAGenericInterface<T extends IAmSomeInterface> {
+    getInstanceOfSomeInterface(id: number): T;
+}
+
+class ClassExtendingSomeInterface implements IAmSomeInterface {
+    getNumber() {
+        return 1;
+    }
+}
+
+class Test implements IAmAGenericInterface<ClassExtendingSomeInterface> {
+    public getInstanceOfSomeInterface(id: number) {
+        //return new ClassExtendingSomeInterface();
+        return (function () {
+            return {
+                getNumber: function () { return 2; }
+            };
+        })();
+    }
+}
+
+class Test2 extends Test {
+    public getInstanceOfSomeInterface(id: number) {
+        return super.getInstanceOfSomeInterface(id);
+    }
+}
+
+var x = new Test();
+var x2 = new Test2();
+
+
+*/
