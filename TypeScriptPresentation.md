@@ -581,7 +581,7 @@ angry tsc
 
     myGlobal.foo = "Hello";
 
-error TS2095: Could not find symbol 'document'.
+error TS2095: Could not find symbol 'myGlobal'.
 
 ---
 
