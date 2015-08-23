@@ -9,7 +9,7 @@ Setup:
 
 ===
 
-# TypeScript 
+# TypeScript
 ### Presented By
 # Jason Jarrett
 > * Twitter: [@staxmanade](https://twitter.com/staxmanade)
@@ -32,7 +32,7 @@ The below JavaScript
     function log(value) {
         console.log(value);
     }
-    
+
     log("Hello World");
 
 is also TypeScript
@@ -47,6 +47,10 @@ Note:
 
 ===
 
+# TypeScript typings are optional
+
+===
+
 ### TypeScript
 
 # Why?
@@ -58,31 +62,29 @@ Note:
 
 ==
 
-# subtle bug(s)
+## subtle bug(s)
 
 > can you see the error(s) here?
 
     function myLog(value: string) {
         alert(value);
     }
-    
+
     mylog(["Hello World"]);
 
 ==
-> can you see the error(s) here?
+
+## Catching easy to miss typos
 
     function myLog(value: string) {
         alert(value);
     }
-    
+
     mylog(["Hello World"]);
 
 compile and we get
 
-    Compile Error. 
-
-    ScratchTypeScript.ts(5,1): 
-        error TS2095: Could not find symbol 'mylog'.
+    error TS2304: Cannot find name 'mylog'.
 
 ==
 
@@ -93,7 +95,7 @@ compile and we get
     function myLog(value: string) {
         console.log(value);
     }
-    
+
     myLog(["Hello World"]);
 
 ==
@@ -106,20 +108,16 @@ compile and we get
     function myLog(value: string) {
         console.log(value);
     }
-    
+
     myLog(["Hello World"]);
 
 compile and we get
 
-    Compile Error. 
+    Compile Error.
 
-    ScratchTypeScript.ts(5,1):
-        error TS2081: Supplied parameters do not match 
-                      any signature of call target.
-
-    ScratchTypeScript.ts(5,1): 
-        error TS2087: Could not select overload 
-                      for 'call' expression.
+    test.ts(5,7): error TS2345: Argument of
+        type 'string[]' is not assignable to
+        parameter of type 'string'.
 
 ==
 
@@ -128,17 +126,7 @@ Now that all our errors are removed
     function myLog(value: string) {
         console.log(value);
     }
-    
-    myLog("Hello World");
 
-==
-
-Now that all our errors are removed
-
-    function myLog(value: string) {
-        console.log(value);
-    }
-    
     myLog("Hello World");
 
 compile and we get
@@ -157,12 +145,10 @@ compile and we get
 
 Note:
 - Built by Microsoft (built out in the open)
-    - Haven't seen them take a pull-request
-    - But are pretty good to respond to Issues reported.
+    - Over 70 contributors to the project on GitHub
 - Open Source (Apache License 2.0)
-- Project hosted on codeplex
-- Led by Anders Hejlsberg (Lead Architect of C#)
-    - As of 8/26 - he's only made 2 commits to the source code and they for spec documentation
+- Project hosted on GitHub
+- Led by Anders Hejlsberg (Considered the father of C#)
 
 ==
 
@@ -196,13 +182,24 @@ Note:
 
 ==
 
-## Install
-
-`Visual Studio Extension`
-
-or
+## Install CLI
 
 `npm install -g typescript`
+
+==
+
+### Editors/IDE's and Plugins
+
+ - Visual Studio (proper)
+ - VS Code
+ - Atom
+ - [CATS](http://jbaron.github.io/cats/) - Code Assistant for TypeScript
+ - WebStorm
+ - Vim
+ - Cloud9 IDE
+ - Eclipse Plugin
+ - Sublime
+ - Emacs
 
 ==
 
@@ -215,7 +212,6 @@ Some Examples
 
     :> tsc hello.ts
     :> tsc --out foo.js foo.ts
-    :> tsc @args.txt
 
 Note:
 
@@ -245,86 +241,6 @@ Note:
 - target: which version of EcmaScript to compile to ES3(default) or ES5 supported
 - (at-file): allows you to put your command line options into a file.
 
-==
-
-# Editors
-
-- many choices
-- early but story is quickly improving
-
-==
-
-# Visual Studio.
-
-> Of course
-
-==
-
-### Intellisense
-
-![object methods](images/VisualStudioIntellisense2.png)
-
-![method parameters](images/VisualStudioIntellisense.png)
-
-
-==
-
-### In-line errors detected
-
-![in-line errors](images/VisualStudioInLineError.png)
-
-==
-
-### Refactoring (Rename)
-
-![](images/VisualStudioRename1.png)
-![](images/VisualStudioRename2.png)
-![](images/VisualStudioRename3.png)
-
-==
-
-### Web Essentials Extension
-
-![](images/VisualStudioWebEssentialsTwoPane.png)
-
-
-==
-
-# JetBrains WebStorm 6
-
-All the greatness of JetBrains for TypeScript
-
-![](images/WebStormEditor.png)
-
-==
-
-# Browser
-
-[TypeScriptLang.org](http://typescriptlang.org)
-
-![](images/EditorsBrowser.png)
-
-
-==
-
-# Vim
-
-Vim (github: [typescript-vim](https://github.com/leafgarland/typescript-vim))
-![](images/EditorsVim.png)
-
-Note:
-TODO: https://github.com/clausreinke/typescript-tools
-
-==
-
-# Other editors
-
-- Cloud 9
-- Eclipse (github: [eclipse-typescript](https://github.com/palantir/eclipse-typescript))
-- Emacs
-- Sublime
-- [CATS](http://jbaron.github.io/cats/) Code Assistant for TypeScript
-- Notepad <- wait what :P
 
 ===
 
@@ -384,13 +300,13 @@ Compiles to:
         hours: number;
         minutes: number;
     }
-    
+
     interface Zoo {
         openTime() : ZooTime;
     }
 Compiles to:
 
-    /* 
+    /*
      * nothing - interfaces striped away during compilation
      * only used during static verification
      */
@@ -410,12 +326,12 @@ or
 
 ==
 
-    import someDependency = module('Dependency');
-    var myClass = new someDependency.someClass();
+    import SomeClass from 'SomeClass';
+    var myClass = new SomeClass();
 
 <br>
 
-The above can work with either `CommonJS` like `RequireJS` or `AMD` used by `nodejs`
+The above can work with either `CommonJS` like in `nodejs`, `AMD` line with `RequireJS`, `UMD`, `System`
 
 ==
 ## Type annotations
@@ -429,21 +345,6 @@ The above can work with either `CommonJS` like `RequireJS` or `AMD` used by `nod
     var func = function(input: SomeClass): number {
         return 1;
     }
-
-==
-
-## Arrow Functions
-
-    var func = () => {
-        return "Hi"
-    }
-
-compiles to
-
-    var func = function () {
-        return "Hi";
-    };
-
 
 ==
 
@@ -484,10 +385,16 @@ compiles to
 
 ## Overloads
 
-    function overloadedMethod(input: string);
-    function overloadedMethod(input: number);
-    function overloadedMethod(input: any) {
-        return input.toString();
+    class TestClass {
+        someMethod(stringParameter: string): void;
+        someMethod(numberParameter: number, stringParameter: string): void;
+
+        someMethod(stringOrNumberParameter: any, stringParameter?: string): void {
+            if (stringOrNumberParameter && typeof stringOrNumberParameter == "number")
+                alert("Variant #2: numberParameter = " + stringOrNumberParameter + ", stringParameter = " + stringParameter);
+            else
+                alert("Variant #1: stringParameter = " + stringOrNumberParameter);
+        }
     }
 
 ==
@@ -533,22 +440,21 @@ compiles to
 ## Structural Typing
 
     class ClassA {
-        SomeMethod(name: string) {
+        someMethod(name: string) {
             return name;
         }
     }
 
-    var SpecialC = function () {
-        this.SomeMethod = function (name: string) {
-            return name;
-        }
+    var SpecialC = function() { }
+    SpecialC.prototype.someMethod = function (name: string) {
+        return name;
     }
 
     var proof: ClassA = new SpecialC();
 
 
 Note:
-TODO: 
+TODO:
 
 
 ## Access modifiers
@@ -559,15 +465,22 @@ TODO:
 
 ## Generics with type constraints
 
-## Exceptions & custom errors
+  class ItemCollection< T >
+  {
+      items: Array< T > = [];
 
-## Rest Parameter
+      add(item: T) {
+          this.items.push(item);
+      }
+  }
 
-```
-    restParameter(...name: string[]) {
-        return name.toString();
-    }
-```
+  var stringCollection = new ItemCollection<string>();
+
+  stringCollection.add("a");
+
+  // error (number 1 is not a string)
+  stringCollection.add(1);
+
 
 ===
 
@@ -581,7 +494,7 @@ angry tsc
 
     myGlobal.foo = "Hello";
 
-error TS2095: Could not find symbol 'myGlobal'.
+error TS2304: Cannot find name 'myGlobal'.
 
 ---
 
@@ -599,19 +512,6 @@ DefinitelyTyped
 
 Note:
 - show lib.d.ts it in V.S.
-
-===
-
-# Let's play with TypeScript
-
-Note:
-- Visual Studio
-- Set TypeScript to compile on save
-- Set document refresh options
-
-
-Really good article:
-http://www.codeproject.com/Articles/528295/ModularizationplusinplusTypeScript
 
 ===
 
