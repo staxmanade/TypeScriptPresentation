@@ -12,16 +12,16 @@ Setup:
 # TypeScript
 ### Presented By
 # Jason Jarrett
+> * Web: [http://staxmanade.com](http://staxmanade.com)
+> * Code: [http://github.com/staxmanade](http://github.com/staxmanade)
+> * Work: [Vertigo](http://vertigo.com)
 > * Twitter: [@staxmanade](https://twitter.com/staxmanade)
-> * Blog: [http://elegantcode.com](http://elegantcode.com)
-> * Some Code: [http://github.com/staxmanade](http://github.com/staxmanade)
-> * Work at: [Vertigo](http://vertigo.com)
 
 ===
 
-### TypeScript
+### What?
 
-# What?
+Optionally typed superset of JavaScript that enables building larger JavaScript based projects.
 
 ==
 
@@ -152,10 +152,12 @@ Note:
 
 ==
 
-# Who else?
+# Community
 
-- [DefinitelyTyped](http://github.com/DefinitelyTyped) (OSS)
-    - `NuGet` and `tsd`
+- [DefinitelyTyped.org](http://github.com/DefinitelyTyped) (OSS)
+- Gulp/Grunt plugins
+- Editors
+- and more...
 
 Note:
 - TypeScript in place of w3c language
@@ -219,29 +221,6 @@ Note:
 - compiler is written in `.ts` and when running is just `.js`
 - can be leveraged by 3rd party tooling (AST, Tokenizer, etc)
 
-==
-
-# some options
-
-      -d, --declaration             Generates corresponding .d.ts file
-      -m KIND, --module KIND        Specify module code generation: "commonjs" or "amd"
-      --noImplicitAny               Warn on expressions and declarations with an implied 'any' type.
-      --sourcemap                   Generates corresponding .map file
-      -t VERSION, --target VERSION  Specify ECMAScript target version: "ES3" (default), or "ES5"
-      @<file>                       Insert command line options and files from a file.
-
-... there are more than listed above ...
-
-Note:
-
-- declaration: will generate a typescript definition file - good for public libraries so others can use the definitions.
-- module type (commonjs or AMD)
-- noImplicitAny: will warn you if the compiler infers an 'any' type in your code.
-- sourcemap:
-- target: which version of EcmaScript to compile to ES3(default) or ES5 supported
-- (at-file): allows you to put your command line options into a file.
-
-
 ===
 
 # Componentization
@@ -249,6 +228,9 @@ Note:
 1. Modules
 2. Classes
 3. Interfaces
+
+> Same as ES6 I mean EcmaScript 2015
+
 
 ==
 
@@ -324,14 +306,12 @@ How to reference another TypeScript file?
 
 or
 
-==
-
     import SomeClass from 'SomeClass';
     var myClass = new SomeClass();
 
 <br>
 
-The above can work with either `CommonJS` like in `nodejs`, `AMD` line with `RequireJS`, `UMD`, `System`
+Can generate `CommonJS`, `AMD`, `UMD`, or `System`.
 
 ==
 ## Type annotations
@@ -418,25 +398,6 @@ compiles to
 
 ==
 
-## Enum sample 2
-
-    enum MyOtherEnum {
-        Value1 = 3,
-        Value2 = 5,
-        Value3 = 8
-    }
-
-compiles to
-
-    var MyOtherEnum;
-    (function (MyOtherEnum) {
-        MyOtherEnum[MyOtherEnum["Value1"] = 3] = "Value1";
-        MyOtherEnum[MyOtherEnum["Value2"] = 5] = "Value2";
-        MyOtherEnum[MyOtherEnum["Value3"] = 8] = "Value3";
-    })(MyOtherEnum || (MyOtherEnum = {}));
-
-==
-
 ## Structural Typing
 
     class ClassA {
@@ -452,35 +413,97 @@ compiles to
 
     var proof: ClassA = new SpecialC();
 
-
-Note:
-TODO:
-
+==
 
 ## Access modifiers
+
+Function/Properties
 
 - public
 - private
 - static
 
-## Generics with type constraints
+==
 
-  class ItemCollection< T >
-  {
-      items: Array< T > = [];
+## Access Modifiers (sample)
+
+    class ClassA {
+		private privateFoo: number;
+		public publicFoo: number;
+		static staticFoo: number;
+        constructor() {
+			this.privateFoo = 1; // not an error
+			this.publicFoo = 1;
+			ClassA.staticFoo = 1;
+        }
+    }
+
+    var obj = new ClassA();
+
+	var privateFoo = obj.privateFoo; // error
+	var publicFoo = obj.publicFoo;
+	var staticFoo = ClassA.staticFoo;
+
+==
+
+## Generics
+
+    class ItemCollection<T> {
+      items: Array<T> = [];
 
       add(item: T) {
           this.items.push(item);
       }
-  }
+    }
 
-  var stringCollection = new ItemCollection<string>();
+    var stringCollection = new ItemCollection<string>();
 
-  stringCollection.add("a");
+    stringCollection.add("a");
 
-  // error (number 1 is not a string)
-  stringCollection.add(1);
+    // error (1 is not a string)
+    stringCollection.add(1);
 
+==
+
+## Generics with type constraints	interface IBar {
+		doSomething(): void;
+	}
+	
+	class MyClass<T extends IBar>{
+		constructor(public someBar: T) {
+		}
+	}
+	
+	var foo = {
+		doSomething: () => {
+			console.log("did something");
+		}
+	}
+	var x = new MyClass(foo);
+	
+	x.someBar.doSomething();
+
+==
+
+## Union Types
+
+	class Class {
+		name: string;
+		daysOfWeek: string[];
+	}
+	
+	class Student {
+		name: string;
+	}
+	
+	var noun: Class|Student = new Class();
+	
+	console.log(noun.name);
+	console.log(noun.daysOfWeek); // error
+	
+	if(noun instanceof Class) {
+		console.log(noun.daysOfWeek); // no error
+	}
 
 ===
 
@@ -490,17 +513,17 @@ TODO:
 
 ## Ambient Declarations
 
-angry tsc
+global variable not known to TypeScript
 
     myGlobal.foo = "Hello";
 
 error TS2304: Cannot find name 'myGlobal'.
 
----
+==
 
-happy tsc
+Tell TypeScript about the variable:
 
-    declare var myGlobal;
+    declare var myGlobal: any;
     myGlobal.foo = "Hello";
 ==
 
@@ -516,9 +539,12 @@ Note:
 ===
 
 ## Presentation:
-[http://github.com/staxmanade/TypeScriptPresentation](http://github.com/staxmanade/TypeScriptPresentation)
-<br>Or this: [http://goo.gl/68qTPm](http://goo.gl/68qTPm)
+
+[staxmanade.com/TypeScriptPresentation](http://staxmanade.com/TypeScriptPresentation)
 <br>
 <br>
 ### Thanks
+
 Jason Jarrett
+
+[@staxmanade](http://staxmanade.com)
