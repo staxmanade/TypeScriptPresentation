@@ -61,7 +61,7 @@ Note:
 Note:
 - Difficult to structure JavaScript at scale.
 - Prevalence of JavaScript
-- Catches a class of bugs earlier
+- Catches a large class of bugs earlier (spelling typos, case sensitivity, etc)
 
 ==
 
