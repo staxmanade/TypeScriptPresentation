@@ -1,5 +1,8 @@
 Setup:
 
+Start presentation `nws -o index.html`
+Press `s` to start notes window
+
 1. Load something so we can easily get to `lib.d.ts`
 2. Turn off Whitespace in Visual Studio
 3. Turn off compile on save for TypeScript
