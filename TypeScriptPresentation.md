@@ -80,12 +80,6 @@ Note:
       propB: true
     }
 
-
-
-===
-
-# TypeScript typings are optional
-
 ===
 
 ### TypeScript
