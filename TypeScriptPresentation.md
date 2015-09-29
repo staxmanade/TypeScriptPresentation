@@ -28,30 +28,6 @@ Optionally typed superset of JavaScript that enables building larger JavaScript 
 
 ==
 
-# Optionally Typed
-
-Note:
-- --noImplicitAny
-- any
-
-==
-
-# Structural Typings
-
-    interface SomeType {
-      propA: string;
-      propB: boolean;
-    }
-    
-    var x: SomeType;
-    
-    x = {
-      propA: "Hello",
-      propB: true
-    }
-
-==
-
 ## Superset
 
 The below JavaScript
@@ -71,6 +47,40 @@ Note:
 - Modules
 - Classes
 - Compiler for static verification
+
+==
+
+# Optionally Typed
+
+    var x = 1;
+    var x: number = 1;
+    
+    var x: number = "hello"; // Compiler Error
+
+Note:
+- --noImplicitAny
+- any
+
+==
+
+# Structural Typings
+
+    var m: { x: string } = { x: "hello" };
+
+
+    interface SomeType {
+      propA: string;
+      propB: boolean;
+    }
+    
+    var x: SomeType;
+    
+    x = {
+      propA: "Hello",
+      propB: true
+    }
+
+
 
 ===
 
