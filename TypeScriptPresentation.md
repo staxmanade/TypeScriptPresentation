@@ -1,14 +1,14 @@
 Setup:
 
-Start presentation `nws -o index.html`
-Press `s` to start notes window
-
 1. Load something so we can easily get to `lib.d.ts`
-2. Turn off Whitespace in Visual Studio
-3. Turn off compile on save for TypeScript
-4. Turn off 'auto load changes if saved'
+2. Visual Studio
+	- Turn off Whitespace in Visual Studio
+	- Turn off compile on save for TypeScript
+	- Turn off 'auto load changes if saved'
 5. Bump up fonts
 6. Open http://www.typescriptlang.org/Playground/
+7. Start presentation `nws -o index.html`
+8. Press `s` to start notes window
 
 ===
 
@@ -28,7 +28,31 @@ Optionally typed superset of JavaScript that enables building larger JavaScript 
 
 ==
 
-## The Language
+# Optionally Typed
+
+Note:
+- --noImplicitAny
+- any
+
+==
+
+# Structural Typings
+
+    interface SomeType {
+      propA: string;
+      propB: boolean;
+    }
+    
+    var x: SomeType;
+    
+    x = {
+      propA: "Hello",
+      propB: true
+    }
+
+==
+
+## Superset
 
 The below JavaScript
 
@@ -232,7 +256,7 @@ Note:
 2. Classes
 3. Interfaces
 
-> Same as ES6 I mean EcmaScript 2015
+> Superset of functionality from ES6 I mean EcmaScript 2015
 
 
 ==
